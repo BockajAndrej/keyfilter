@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+// strnicmp(str, str, 1);
+// scanf("%[^\n]", &Addresses[indexCounter++]);
+// printf("%i\n", strlen(Addresses[indexCounter - 1]));
+
+int count_occur_of_character(char a)
+{
+    int cnt = 0;
+    int c = 0;
+    while ((c = getchar()) != EOF)
+    {
+        if ((char)c == (char)a)
+            cnt++;
+    }
+    return cnt;
+}
+
+int count_occur_of_character_from_file(char *filename)
+{
+    (void)filename;
+    // TODO
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
+    int cnt = 0;
+    if (argc < 2)
+        cnt = count_occur_of_character('a');
+    else
+        cnt = count_occur_of_character_from_file(argv[1]);
+
+    printf("%i", cnt);
+    return 0;
+}
