@@ -6,12 +6,12 @@
 // printf("c = %c\n", c);
 // printf("input = %c\n", input[cntIndex]);
 
-bool *count_occur_of_character(FILE *src, char input[])
+bool *count_occur_of_character(FILE *src, char input[], bool printableChar[])
 {
     int c = 0;
     int cntIndex = 0;
     bool findCharacter = false;
-    static bool printableCharacters[95] = {false}; // 95 = 127chars - 32chars enable o
+    // static bool printableChar[95] = {false};
 
     while ((c = fgetc(src)) != EOF)
     {
@@ -24,15 +24,15 @@ bool *count_occur_of_character(FILE *src, char input[])
         {
             if (input == NULL)
             {
-                if ((cntIndex == 0) && (!(printableCharacters[c - 32])))
+                if ((cntIndex == 0) && (!(printableChar[c - 32])))
                 {
-                    printableCharacters[c - 32] = true;
+                    printableChar[c - 32] = true;
                 }
                 cntIndex++;
             }
-            else if ((input[cntIndex] == '\0') && findCharacter && (!(printableCharacters[c - 32])))
+            else if ((input[cntIndex] == '\0') && findCharacter && (!(printableChar[c - 32])))
             {
-                printableCharacters[c - 32] = true;
+                printableChar[c - 32] = true;
                 findCharacter = false;
             }
             else if (c == input[cntIndex])
@@ -47,10 +47,10 @@ bool *count_occur_of_character(FILE *src, char input[])
         }
     }
 
-    return printableCharacters;
+    return printableChar;
 }
 
-bool *count_occur_of_character_from_file(char *file1, char *file2)
+bool *count_occur_of_character_from_file(char *file1, char *file2, bool printableChar[])
 {
     FILE *source_file;
     bool checkFile1 = false;
@@ -69,16 +69,10 @@ bool *count_occur_of_character_from_file(char *file1, char *file2)
         return 0;
     }
 
-    bool *printableChar = NULL;
-
-    // printf("File1 %i\n", checkFile1);
-    // printf("File1 = %s\n", file1);
-    // printf("File2 = %s\n", file2);
-
     if (checkFile1)
-        *printableChar = count_occur_of_character(source_file, NULL);
+        count_occur_of_character(source_file, NULL, printableChar);
     else
-        *printableChar = count_occur_of_character(source_file, file1);
+        count_occur_of_character(source_file, file1, printableChar);
 
     fclose(source_file);
 
@@ -87,12 +81,12 @@ bool *count_occur_of_character_from_file(char *file1, char *file2)
 
 int main(int argc, char **argv)
 {
-    bool *printableChar = NULL;
+    bool printableChar[95] = {false}; // (95 = 127chars - 32) chars enable to print
 
     if (argc < 2)
-        *printableChar = count_occur_of_character_from_file(argv[1], NULL);
+        count_occur_of_character_from_file(argv[1], NULL, printableChar);
     else
-        *printableChar = count_occur_of_character_from_file(argv[1], argv[2]);
+        count_occur_of_character_from_file(argv[1], argv[2], printableChar);
 
     for (int index = 32; index < 127; index++)
     {
