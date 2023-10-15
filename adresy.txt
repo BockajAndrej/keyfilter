@@ -2,4 +2,130 @@ Praha
 Brno
 Bruntal
 Bratislava
-Bekocov
+Alexander City
+Andalusia
+Anniston
+Athens
+Atmore
+Auburn
+Bessemer
+Birmingham
+Chickasaw
+Clanton
+Cullman
+Decatur
+Demopolis
+Dothan
+Enterprise
+Eufaula
+Florence
+Fort Payne
+Gadsden
+Greenville
+Guntersville
+Huntsville
+Jasper
+Marion
+Mobile
+Montgomery
+Opelika
+Ozark
+Phenix City
+Prichard
+Scottsboro
+Selma
+Sheffield
+Sylacauga
+Talladega
+Troy
+Tuscaloosa
+Tuscumbia
+Tuskegee
+Alaska
+Anchorage
+Cordova
+Fairbanks
+Haines
+Homer
+Juneau
+Ketchikan
+Kodiak
+Kotzebue
+Nome
+Palmer
+Seward
+Sitka
+Skagway
+Valdez
+Arizona
+Ajo
+Avondale
+Bisbee
+Casa Grande
+Chandler
+Clifton
+Douglas
+Flagstaff
+Florence
+Gila Bend
+Glendale
+Globe
+Kingman
+Lake Havasu City
+Mesa
+Nogales
+Oraibi
+Phoenix
+Prescott
+Scottsdale
+Sierra Vista
+Tempe
+Tombstone
+Tucson
+Walpi
+Window Rock
+Winslow
+Yuma
+Arkansas
+Arkadelphia
+Arkansas Post
+Batesville
+Benton
+Blytheville
+Camden
+Conway
+Crossett
+El Dorado
+Fayetteville
+Forrest City
+Fort Smith
+Harrison
+Helena
+Hope
+Hot Springs
+Jacksonville
+Jonesboro
+Little Rock
+Magnolia
+Morrilton
+Newport
+North Little Rock
+Osceola
+Pine Bluff
+Rogers
+Searcy
+Stuttgart
+Van Buren
+West Memphis
+California
+Alameda
+Alhambra
+Anaheim
+Antioch
+Arcadia
+Bakersfield
+Barstow
+Belmont
+Berkeley
+Beverly 
+Brea
