@@ -2,7 +2,20 @@
 #include <string.h>
 #include <stdbool.h>
 
-int count_occur_of_character(FILE *src, char input[], bool printableChar[], char cityName[])
+char strlwr(char a)
+{
+    if ((a >= 65) && (a <= 90))
+        a += 32;
+    return a;
+}
+
+void add_char_to_cityname(char cityName[], char input)
+{
+    if (strlen(cityName) < 99)
+        strncat(cityName, &input, 1);
+}
+
+int count_occur_of_character(char input[], bool printableChar[], char cityName[])
 {
     int c = 0;
     int cntIndex = 0;
@@ -11,11 +24,14 @@ int count_occur_of_character(FILE *src, char input[], bool printableChar[], char
     bool findChar = false;
     bool ReadFullWord = false;
 
-    while ((c = fgetc(src)) != EOF)
+    while ((c = getchar()) != EOF)
     {
-
         if (c == 10) // Finding enter character
         {
+            if (findChar && (input[cntIndex] == '\0'))
+                cntChars++;
+            if((cntChars < 1) && (strlen(cityName) > 1))
+                memset(cityName, '\0', strlen(cityName));
             cntIndex = 0;
             ReadFullWord = false;
             enableToFindChar = true;
@@ -33,27 +49,26 @@ int count_occur_of_character(FILE *src, char input[], bool printableChar[], char
             }
 
             else if (ReadFullWord)
-            {
-                char auxiliaryChar = c;
-                strncat(cityName, &auxiliaryChar, 1);
-            }
+                add_char_to_cityname(cityName, c);
             else if ((input[cntIndex] == '\0') && findChar)
             {
                 printableChar[c - 32] = true; // saves char
-                ReadFullWord = true;
+                if (cntChars < 1)
+                {
+                    add_char_to_cityname(cityName, c);
+                    ReadFullWord = true;
+                }
                 findChar = false;
                 enableToFindChar = false;
                 cntChars++;
-                char auxiliaryChar = c;
-                strncat(cityName, &auxiliaryChar, 1);
             }
-            else if ((c == input[cntIndex]) && enableToFindChar)
+            else if ((strlwr(c) == strlwr(input[cntIndex])) && enableToFindChar)
             {
+                
                 cntIndex++;
                 findChar = true;
-                char auxiliaryChar = c;
                 if (cntChars < 1)
-                    strncat(cityName, &auxiliaryChar, 1);
+                    add_char_to_cityname(cityName, c);
             }
             else
             {
@@ -66,37 +81,6 @@ int count_occur_of_character(FILE *src, char input[], bool printableChar[], char
     }
 
     return cntChars;
-}
-
-int count_occur_of_character_from_file(char *file1, char *file2, bool printableChar[], char cityName[])
-{
-    FILE *source_file;
-    bool checkFile1 = false;
-
-    if (file2 == NULL)
-    {
-        source_file = fopen(file1, "r");
-        checkFile1 = true;
-    }
-    else
-        source_file = fopen(file2, "r");
-
-    if (source_file == NULL)
-    {
-        printf("-- source_file == NULL --");
-        return -1;
-    }
-
-    int cnt = 0;
-
-    if (checkFile1)
-        cnt = count_occur_of_character(source_file, NULL, printableChar, cityName);
-    else
-        cnt = count_occur_of_character(source_file, file1, printableChar, cityName);
-
-    fclose(source_file);
-
-    return cnt;
 }
 
 void print_characters(bool printableChar[])
@@ -116,6 +100,8 @@ void print_result(int cnt, char cityName[], bool printableChar[])
         printf("Found: %s\n", cityName);
     else
     {
+        if(strlen(cityName) > 1)
+            printf("Found: %s\n", cityName);
         printf("Enable: ");
         print_characters(printableChar);
         printf("\n");
@@ -126,18 +112,13 @@ int main(int argc, char **argv)
 {
     bool printableChar[95] = {false}; // (95 = 127chars - 32) chars enable to print
     char cityName[100];
+    int cnt = 0;
+
+    (void)argc;
 
     memset(cityName, 0, sizeof(cityName));
 
-    int cnt = 0;
-
-    if (argc < 2)
-        cnt = count_occur_of_character_from_file(argv[1], NULL, printableChar, cityName);
-    else
-        cnt = count_occur_of_character_from_file(argv[1], argv[2], printableChar, cityName);
-
-    if (cnt == -1)
-        return 1;
+    cnt = count_occur_of_character(argv[1], printableChar, cityName);
 
     print_result(cnt, cityName, printableChar);
 
