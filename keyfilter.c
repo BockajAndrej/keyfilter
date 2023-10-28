@@ -2,13 +2,19 @@
 #include <string.h>
 #include <stdbool.h>
 
-char strlwr(char a)
+//Make from lowercase letters uppercase 
+char strupr(char a);
+//Adding a character to char array (cityname)
+void add_char_to_cityname(char cityName[], char input);
+//Searching for characters and city
+int count_occur_of_character(char input[], bool printableChar[], char cityName[]);
+//Prints only enable characters for future searching
+void print_characters(bool printableChar[]);
+//Prints according to assignment  
+void print_result(int cnt, char cityName[], bool printableChar[]);
+
+char strupr(char a)
 {
-    if ((a >= 65) && (a <= 90))
-        a += 32;
-    return a;
-}
-char strupr(char a){
     if((a >= 'a') && (a <= 'z'))
         a -= 32;
     return a;
@@ -29,10 +35,11 @@ int count_occur_of_character(char input[], bool printableChar[], char cityName[]
     bool findChar = false;
     bool ReadFullWord = false;
 
+    //It reads only one char 
     while ((c = getchar()) != EOF)
     {
         //printf("Index = %i, Cntchar = %i, getchar = %c, expected = %c\n", cntIndex, cntChars, strupr(c), strupr(input[cntIndex]));
-        if (c == 10) // Finding enter character
+        if (c == 10) // Searching for enter character
         {
             if (findChar && (input[cntIndex] == '\0'))
                 cntChars++;
@@ -42,7 +49,7 @@ int count_occur_of_character(char input[], bool printableChar[], char cityName[]
             ReadFullWord = false;
             enableToFindChar = true;
         }
-        else if ((c >= 32) && (c < 127)) // Protect underflow array if c-32 < 0 on printable char
+        else if ((c >= 32) && (c < 127)) // Protect underflow array if c-32 < 0 on printable char and it supports only ascii characters
         {
             if (input == NULL) // Protect for NULL == input
             {
@@ -114,13 +121,17 @@ void print_result(int cnt, char cityName[], bool printableChar[])
 
 int main(int argc, char **argv)
 {
-    bool printableChar[95] = {false}; // (95 = 127chars - 32) chars enable to print
-    char cityName[100]; 
-    int cnt = 0;
+    bool printableChar[95] = {false};   // (95 = 127chars - 32) chars enable to print
+    char cityName[100];                 // It will contain name of found city
+    int cnt = 0;                        // Counter of foundable cities 
 
     (void)argc;
+    if(argv[1] != NULL){
+        if(strlen(argv[1]) == 0)
+            argv[1] = NULL;
+    }
 
-    memset(cityName, 0, sizeof(cityName));
+    memset(cityName, 0, sizeof(cityName));  //Clear whole array 
 
     cnt = count_occur_of_character(argv[1], printableChar, cityName);
 
